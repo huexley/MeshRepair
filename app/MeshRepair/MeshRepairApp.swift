@@ -77,11 +77,17 @@ final class RepairModel {
         engineError = nil
     }
 
+    /// The engine bundled inside the app (PKG build), else the clone set up by install.sh.
     private func engine() -> (python: String, script: String)? {
+        let fm = FileManager.default
+        if let res = Bundle.main.resourceURL?.appendingPathComponent("engine") {
+            let python = res.appendingPathComponent("python/bin/python3").path
+            let script = res.appendingPathComponent("meshrepair.py").path
+            if fm.isExecutableFile(atPath: python), fm.fileExists(atPath: script) { return (python, script) }
+        }
         let info = Bundle.main.infoDictionary ?? [:]
         guard let python = info["MRPython"] as? String, let script = info["MRScript"] as? String,
-              FileManager.default.isExecutableFile(atPath: python),
-              FileManager.default.fileExists(atPath: script) else { return nil }
+              fm.isExecutableFile(atPath: python), fm.fileExists(atPath: script) else { return nil }
         return (python, script)
     }
 
@@ -111,6 +117,8 @@ final class RepairModel {
         var env = ProcessInfo.processInfo.environment
         env["PYTHONUNBUFFERED"] = "1"
         env["PYTHONWARNINGS"] = "ignore"
+        env["PYTHONNOUSERSITE"] = "1"         // ignore packages from the user's own Python
+        env["PYTHONDONTWRITEBYTECODE"] = "1"  // never write inside the (signed) app bundle
         proc.environment = env
         let out = Pipe(), err = Pipe()
         proc.standardOutput = out

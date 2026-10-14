@@ -8,6 +8,22 @@ Windows-only service) or online repair sites, but it runs **entirely offline**, 
 
 ## Install
 
+### Installer (easiest)
+
+Download `MeshRepair-<version>.pkg` from the [latest release](https://github.com/huexley/MeshRepair/releases/latest)
+and open it. It installs *Mesh Repair.app* in Applications and the `meshrepair` command in
+`/usr/local/bin`. Everything it needs, Python included, is inside the app. Requires a Mac with
+Apple Silicon and macOS 14 or later.
+
+The installer is not signed with an Apple Developer ID, so macOS blocks it the first time:
+open **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to the
+message about *MeshRepair….pkg*. Alternatively, run
+`xattr -d com.apple.quarantine ~/Downloads/MeshRepair-*.pkg` before opening it.
+
+To uninstall: delete *Mesh Repair.app* and `/usr/local/bin/meshrepair`.
+
+### From source
+
 Requirements: macOS 14+, Python 3.10+ (or [uv](https://docs.astral.sh/uv/)), and Xcode or the
 Command Line Tools (`xcode-select --install`) to build the native app. Without them,
 `install.sh` builds a simpler AppleScript droplet instead.
@@ -69,6 +85,14 @@ In a 3MF with several objects, each object is repaired separately.
 - In repaired 3MF files the object names are not preserved.
 - If MeshFix would throw away most of a heavily damaged body, a lighter repair is used instead
   (fill holes + fix normals). The report then says "⚠️ improved, but some issues remain".
+
+## Building the installer
+
+```sh
+packaging/build_pkg.sh 1.1.0   # → dist/MeshRepair-1.1.0.pkg
+```
+
+Needs [uv](https://docs.astral.sh/uv/) (it downloads a standalone arm64 Python to embed) and Xcode.
 
 ## Tests
 

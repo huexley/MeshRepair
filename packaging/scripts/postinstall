@@ -1,0 +1,5 @@
+#!/bin/sh
+# Adds the `meshrepair` command to the Terminal.
+mkdir -p /usr/local/bin
+ln -sf "/Applications/Mesh Repair.app/Contents/Resources/engine/meshrepair" /usr/local/bin/meshrepair
+exit 0

@@ -1,8 +1,9 @@
 #!/bin/sh
-# Builds the native Mesh Repair.app: build.sh OUT.app PYTHON SCRIPT
+# Builds the native Mesh Repair.app: build.sh OUT.app PYTHON SCRIPT [VERSION]
+# PYTHON/SCRIPT may be empty when the engine is bundled afterwards (packaging/build_pkg.sh).
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
-APP="$1"; PYTHON="$2"; SCRIPT="$3"
+APP="$1"; PYTHON="$2"; SCRIPT="$3"; VERSION="$4"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
@@ -13,6 +14,7 @@ swiftc -O -parse-as-library -target "$(uname -m)-apple-macos14.0" \
 cp "$HERE/Info.plist" "$B/Info.plist"
 plutil -replace MRPython -string "$PYTHON" "$B/Info.plist"
 plutil -replace MRScript -string "$SCRIPT" "$B/Info.plist"
+[ -z "$VERSION" ] || plutil -replace CFBundleShortVersionString -string "$VERSION" "$B/Info.plist"
 swift "$HERE/make_icon.swift" "$TMP/AppIcon.iconset"
 iconutil -c icns "$TMP/AppIcon.iconset" -o "$B/Resources/AppIcon.icns"
 codesign --force -s - "$TMP/Mesh Repair.app"
