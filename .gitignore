@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+.DS_Store
+tests/out/
+*_fixed.*

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleName</key><string>Mesh Repair</string>
+	<key>CFBundleDisplayName</key><string>Mesh Repair</string>
+	<key>CFBundleIdentifier</key><string>io.github.huexley.meshrepair</string>
+	<key>CFBundleExecutable</key><string>MeshRepair</string>
+	<key>CFBundleIconFile</key><string>AppIcon</string>
+	<key>CFBundlePackageType</key><string>APPL</string>
+	<key>CFBundleShortVersionString</key><string>1.1</string>
+	<key>CFBundleVersion</key><string>2</string>
+	<key>LSMinimumSystemVersion</key><string>14.0</string>
+	<key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
+	<key>NSHighResolutionCapable</key><true/>
+	<key>NSHumanReadableCopyright</key><string>GPL-3.0 · uses MeshFix / pymeshfix</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key><string>3D model</string>
+			<key>CFBundleTypeRole</key><string>Viewer</string>
+			<key>LSHandlerRank</key><string>Alternate</string>
+			<key>CFBundleTypeExtensions</key>
+			<array><string>stl</string><string>3mf</string><string>obj</string><string>ply</string><string>off</string><string>glb</string></array>
+			<key>LSItemContentTypes</key>
+			<array><string>public.standard-tesselated-geometry-format</string><string>public.3mf</string><string>public.geometry-definition-format</string><string>public.polygon-file-format</string><string>org.khronos.glb</string></array>
+		</dict>
+	</array>
+	<key>MRPython</key><string>__PYTHON__</string>
+	<key>MRScript</key><string>__SCRIPT__</string>
+</dict>
+</plist>
